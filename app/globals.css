@@ -1,0 +1,368 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 210 40% 98%;
+  --foreground: 222 47% 11%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+
+  --primary: 222 47% 11%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+
+  /* Teal/água-marinha - combina com o azul do tema (#14B8A6) */
+  --accent: 174 80% 38%;
+  --accent-foreground: 210 40% 98%;
+  --accent-glow: 174 80% 38% / 0.4;
+  --card-border: 174 80% 38% / 0.3;
+
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 222 47% 11%;
+
+  --radius: 1rem;
+}
+
+.dark {
+  --background: 222 47% 8%;
+  --foreground: 210 40% 98%;
+
+  --card: 222 47% 11%;
+  --card-foreground: 210 40% 98%;
+
+  --popover: 222 47% 11%;
+  --popover-foreground: 210 40% 98%;
+
+  --primary: 210 40% 98%;
+  --primary-foreground: 222 47% 11%;
+
+  --secondary: 217 32% 14%;
+  --secondary-foreground: 210 40% 98%;
+
+  --accent: 174 80% 38%;
+  --accent-foreground: 210 40% 98%;
+  --accent-glow: 174 80% 38% / 0.5;
+  --card-border: 174 80% 38% / 0.25;
+
+  --muted: 217 32% 17%;
+  --muted-foreground: 215 20% 65%;
+
+  --border: 217 32% 17%;
+  --input: 217 32% 17%;
+  --ring: 174 80% 38%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-syne font-bold;
+  }
+}
+
+@layer components {
+  .project-card {
+    @apply relative overflow-hidden rounded-2xl transition-all duration-500 shadow-sm hover:shadow-md;
+  }
+
+  .project-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-background/95 via-background/50 to-transparent 
+    flex flex-col justify-end p-6 opacity-0 transition-opacity duration-500;
+  }
+
+  .project-card:hover .project-overlay {
+    @apply opacity-100;
+  }
+
+  .project-card:hover img {
+    @apply scale-105;
+  }
+
+  .nav-link {
+    @apply relative px-3 py-2 text-sm font-medium transition-colors text-foreground;
+  }
+
+  .nav-link:hover {
+    @apply text-accent;
+  }
+
+  .nav-link::after {
+    content: "";
+    @apply absolute left-0 bottom-0 w-0 h-0.5 bg-accent transition-all duration-300;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
+  }
+
+  .glass-card {
+    @apply bg-white/80 dark:bg-black/20 backdrop-blur-md rounded-2xl shadow-sm border border-white/20 dark:border-white/10;
+  }
+
+  /* Card moderno - tema escuro, borda accent sutil */
+  .glass-card-modern {
+    @apply bg-secondary/80 dark:bg-secondary/60 backdrop-blur-md rounded-2xl border border-accent/20 
+    shadow-lg transition-all duration-300;
+  }
+
+.glass-card-modern:hover {
+  @apply border-accent/40;
+  box-shadow: 0 0 30px -5px hsl(var(--accent-glow));
+}
+
+  /* Badge/Pill estilo AI.Now */
+  .badge-modern {
+    @apply inline-flex items-center px-4 py-2 rounded-full text-sm font-medium 
+    bg-accent/10 text-accent border border-accent/30;
+  }
+
+  /* Botão outline accent */
+  .btn-modern {
+    @apply px-6 py-3 rounded-full font-medium transition-all duration-300
+    bg-transparent border-2 border-accent text-foreground hover:bg-accent/10 
+    hover:shadow-[0_0_20px_-5px_hsl(var(--accent-glow))];
+  }
+
+  /* Botão preenchido accent */
+  .btn-modern-filled {
+    @apply px-6 py-3 rounded-full font-medium transition-all duration-300
+    bg-accent text-accent-foreground hover:bg-accent/90 
+    hover:shadow-[0_0_25px_-5px_hsl(var(--accent-glow))];
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent via-accent/90 to-white;
+  }
+
+  .star-bg {
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    @apply absolute -z-10 bg-muted;
+  }
+
+  .timeline-item {
+    @apply relative pl-8 pb-12;
+  }
+
+  .timeline-item::before {
+    content: "";
+    @apply absolute left-0 top-0 h-full w-px bg-accent/30;
+  }
+
+  .timeline-item::after {
+    content: "";
+    @apply absolute left-[-4px] top-1 h-2 w-2 rounded-full bg-accent;
+  }
+
+  .timeline-item:last-child {
+    @apply pb-0;
+  }
+
+  .timeline-item:last-child::before {
+    @apply h-8;
+  }
+
+  .skill-bar {
+    @apply h-1 bg-primary rounded-full relative overflow-hidden;
+  }
+
+  .skill-bar::after {
+    content: "";
+    @apply absolute top-0 left-0 h-full bg-accent/70;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .marquee {
+    @apply flex overflow-hidden whitespace-nowrap;
+  }
+
+  .marquee-content {
+    @apply flex items-center space-x-8;
+    animation: marquee 30s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+
+  /* Blobs com tom accent para tema escuro */
+  .blob-shape {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    @apply absolute -z-10 bg-accent/5 animate-blob;
+  }
+
+  .blob-shape-2 {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    @apply absolute -z-10 bg-accent/10 animate-blob animation-delay-2000;
+  }
+
+  .blob-shape-3 {
+    border-radius: 40% 60% 60% 40% / 40% 60% 40% 60%;
+    @apply absolute -z-10 bg-accent/5 animate-blob animation-delay-4000;
+  }
+
+  .dot-pattern {
+    background-image: radial-gradient(hsl(var(--muted-foreground)) 1px, transparent 1px);
+    background-size: 24px 24px;
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    z-index: -10;
+  }
+
+  /* Linhas orgânicas para fundo */
+  .glow-lines {
+    @apply absolute inset-0 -z-10 overflow-hidden;
+  }
+
+  .glow-line {
+    position: absolute;
+    width: 200%;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--accent) / 0.15),
+      hsl(var(--accent) / 0.4),
+      hsl(var(--accent) / 0.15),
+      transparent
+    );
+    animation: glowFlow 8s ease-in-out infinite;
+  }
+
+  .glow-line-1 { top: 15%; transform: rotate(-5deg); animation-delay: 0s; }
+  .glow-line-2 { top: 45%; transform: rotate(3deg); animation-delay: -2s; }
+  .glow-line-3 { top: 75%; transform: rotate(-2deg); animation-delay: -4s; }
+}
+
+@keyframes glowFlow {
+  0%, 100% { opacity: 0.3; transform: translateX(-25%); }
+  50% { opacity: 0.7; transform: translateX(0); }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animate-delay-500 {
+  animation-delay: 0.5s;
+}
+
+@keyframes drawLine {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-draw-line {
+  position: relative;
+}
+
+.animate-draw-line::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: hsl(var(--accent));
+  animation: drawLine 1s ease-out forwards;
+  animation-delay: 0.5s;
+}
