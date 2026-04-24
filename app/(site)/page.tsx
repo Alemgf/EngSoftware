@@ -1,13 +1,16 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowRight, Code, Zap, Layout, Users } from "lucide-react"
+import { ArrowRight, Code, Zap, Layout, Users, Mail, Phone } from "lucide-react"
 import { createSupabaseClient } from "@/lib/supabase/client"
 
 const supabase = createSupabaseClient()
+
+const MAIL_HREF = "mailto:landingstudiopro@gmail.com"
+const TEL_HREF = "tel:+5527998170613"
 
 type FeaturedProject = {
   id: string
@@ -21,17 +24,8 @@ const FEATURED_COLORS = ["bg-accent/20", "bg-accent/15", "bg-accent/25", "bg-acc
 const DEFAULT_THUMB = "https://placehold.co/600x400?text=Em+breve"
 
 export default function Home() {
-  const marqueeRef = useRef<HTMLDivElement>(null)
   const [featuredProjects, setFeaturedProjects] = useState<FeaturedProject[]>([])
   const [featuredLoading, setFeaturedLoading] = useState(true)
-
-  useEffect(() => {
-    const marqueeContent = marqueeRef.current
-    if (!marqueeContent) return
-
-    const clone = marqueeContent.cloneNode(true)
-    marqueeRef.current?.parentElement?.appendChild(clone)
-  }, [])
 
   useEffect(() => {
     const fetchFeatured = async () => {
@@ -79,7 +73,6 @@ export default function Home() {
     fetchFeatured()
   }, [])
 
-  // Variantes para animações com Framer Motion
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -101,7 +94,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-24 sm:pt-28 overflow-hidden isolate">
         <div className="glow-lines">
           <div className="glow-line glow-line-1" />
@@ -116,22 +108,21 @@ export default function Home() {
         <div className="container mx-auto w-full px-5 sm:px-6 md:px-6 max-w-7xl relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 items-center">
             <motion.div initial="hidden" animate="visible" variants={fadeInUp} className="mt-2 sm:mt-0">
-              <span className="badge-modern mb-5 sm:mb-6 inline-flex">
-                Portfólio de Excelência
-              </span>
+              <span className="badge-modern mb-5 sm:mb-6 inline-flex">Portfólio de Excelência</span>
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-5 sm:mb-6 leading-tight">
                 <span className="gradient-text">Landing Pages</span> para seu Negócio
               </h1>
               <p className="text-xl text-muted-foreground mb-8 max-w-lg">
-                Conheça nosso portfólio de projetos e escolha o nível de qualidade que deseja para o seu site. Desde
-                landing pages simples até sites sofisticados com animações e recursos avançados.
+                Conheça nosso portfólio em destaque nesta página e escolha o nível de qualidade que deseja para o seu
+                site. Desde landing pages simples até sites sofisticados com animações e recursos avançados.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link href="/projetos" className="btn-modern-filled inline-flex items-center">
-                  Ver Projetos <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-                <Link href="/sobre" className="btn-modern inline-flex items-center">
-                  Sobre o Studio
+                <a href={MAIL_HREF} className="btn-modern-filled inline-flex items-center">
+                  <Mail className="mr-2 h-5 w-5" />
+                  Enviar e-mail
+                </a>
+                <Link href="#contato" className="btn-modern inline-flex items-center">
+                  Contato <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </div>
             </motion.div>
@@ -163,7 +154,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features */}
       <section className="py-24 relative overflow-hidden">
         <div className="blob-shape-3 w-[600px] h-[600px] top-[-100px] left-[-100px] opacity-20"></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -220,8 +210,11 @@ export default function Home() {
                 <div className="flex justify-center shrink-0">{feature.icon}</div>
                 <h3 className="text-xl font-bold mb-2 text-foreground shrink-0">{feature.title}</h3>
                 <p className="text-muted-foreground mb-4 flex-1 min-h-[3.5rem]">{feature.description}</p>
-                <Link href="/projetos" className="text-accent text-sm font-medium hover:underline inline-flex items-center shrink-0 mt-auto">
-                  Ver mais <ArrowRight className="ml-1 h-4 w-4" />
+                <Link
+                  href="#contato"
+                  className="text-accent text-sm font-medium hover:underline inline-flex items-center shrink-0 mt-auto"
+                >
+                  Fale conosco <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
               </motion.div>
             ))}
@@ -229,8 +222,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Templates */}
-      <section className="py-24 relative overflow-hidden bg-secondary/30">
+      <section id="portfolio" className="py-24 relative overflow-hidden bg-secondary/30 scroll-mt-24">
         <div className="blob-shape-2 w-[500px] h-[500px] bottom-[-200px] right-[-100px] opacity-30"></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
@@ -253,12 +245,9 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Link
-                href="/projetos"
-                className="mt-4 md:mt-0 btn-modern inline-flex items-center"
-              >
-                Ver todos os projetos <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              <a href={MAIL_HREF} className="mt-4 md:mt-0 btn-modern inline-flex items-center">
+                Falar sobre seu projeto <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
             </motion.div>
           </div>
 
@@ -269,14 +258,15 @@ export default function Home() {
               ))
             ) : featuredProjects.length === 0 ? (
               <p className="col-span-full py-12 text-center text-muted-foreground">
-                Nenhum projeto em destaque no momento.{" "}
-                <Link href="/projetos" className="text-accent hover:underline">
-                  Ver todos os projetos
-                </Link>
+                Nenhum projeto em destaque no momento. Entre em contato para saber mais sobre nossos serviços.
               </p>
             ) : (
               featuredProjects.map((projeto, index) => (
-                <Link key={projeto.id} href={`/projetos/${projeto.id}`} className="project-card group">
+                <article
+                  key={projeto.id}
+                  className="project-card group"
+                  aria-label={`Projeto em destaque: ${projeto.title}`}
+                >
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -291,24 +281,25 @@ export default function Home() {
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="project-overlay">
-                      <div className={`w-12 h-12 ${projeto.color} rounded-full mb-4 flex items-center justify-center border border-accent/30`}>
+                      <div
+                        className={`w-12 h-12 ${projeto.color} rounded-full mb-4 flex items-center justify-center border border-accent/30`}
+                      >
                         <span className="text-accent font-bold">{projeto.title.charAt(0)}</span>
                       </div>
                       <h3 className="text-2xl font-bold mb-2 text-foreground">{projeto.title}</h3>
                       <p className="text-muted-foreground mb-3">{projeto.category}</p>
                       <span className="text-accent text-sm font-medium inline-flex items-center">
-                        Ver mais <ArrowRight className="ml-1 h-4 w-4" />
+                        Destaque do portfólio
                       </span>
                     </div>
                   </motion.div>
-                </Link>
+                </article>
               ))
             )}
           </div>
         </div>
       </section>
 
-      {/* Process */}
       <section className="py-24 relative overflow-hidden">
         <div className="blob-shape w-[500px] h-[500px] top-[-100px] left-[50%] opacity-20"></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -319,7 +310,9 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 gradient-text animate-draw-line inline-block">Como Funciona</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 gradient-text animate-draw-line inline-block">
+              Como Funciona
+            </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Processo simples e rápido para ter sua landing page no ar em poucos passos.
             </p>
@@ -335,15 +328,15 @@ export default function Home() {
             {[
               {
                 step: "01",
-                title: "Explore Nosso Portfólio",
+                title: "Conheça o Estilo",
                 description:
-                  "Navegue por nossa galeria e identifique estilo de Design e o tipo de WebSite (basico,intermediario..) que deseja para seu projeto.",
+                  "Veja os trabalhos em destaque nesta página e identifique o tipo de site (básico, intermediário ou avançado) que combina com o seu negócio.",
               },
               {
                 step: "02",
-                title: "Solicite um Orçamento",
+                title: "Entre em Contato",
                 description:
-                  "Preencha o formulário com suas informações e necessidades específicas para receber uma proposta personalizada.",
+                  "Envie um e-mail ou ligue para apresentar sua ideia. Respondemos com orientações e os próximos passos, sem formulários obrigatórios no site.",
               },
               {
                 step: "03",
@@ -368,7 +361,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact CTA */}
       <section className="py-24 relative overflow-hidden">
         <div className="blob-shape-3 w-[800px] h-[800px] top-[-400px] right-[-400px] opacity-20"></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -382,12 +374,21 @@ export default function Home() {
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl md:text-5xl font-bold mb-6 gradient-text">Pronto para ter seu site exclusivo?</h2>
               <p className="text-lg text-muted-foreground mb-8">
-                Entre em contato conosco para discutir suas necessidades específicas e obter um orçamento baseado no
-                nível de complexidade desejado.
+                Fale com a gente por e-mail ou telefone para alinhar escopo, prazos e investimento do seu projeto.
               </p>
-              <Link href="/contato" className="btn-modern-filled inline-flex items-center">
-                Fale Conosco <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <a href={MAIL_HREF} className="btn-modern-filled inline-flex items-center">
+                  <Mail className="mr-2 h-5 w-5" />
+                  E-mail
+                </a>
+                <a href={TEL_HREF} className="btn-modern inline-flex items-center">
+                  <Phone className="mr-2 h-5 w-5" />
+                  Ligar
+                </a>
+                <Link href="#contato" className="btn-modern inline-flex items-center">
+                  Ver dados no rodapé <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </div>
             </div>
           </motion.div>
         </div>

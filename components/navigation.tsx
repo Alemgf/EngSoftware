@@ -4,15 +4,10 @@ import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, ArrowRight } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
-const navItems = [
-  { name: "Início", path: "/" },
-  { name: "Projetos", path: "/projetos" },
-  { name: "Sobre", path: "/sobre" },
-  { name: "Contato", path: "/contato" },
-]
+const navItems = [{ name: "Início", path: "/" }]
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -62,22 +57,18 @@ export default function Navigation() {
             LANDING<span className="text-accent">.</span>Studio
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center flex-shrink-0 space-x-6 lg:space-x-8">
             {navItems.map((item) => (
-              <Link key={item.path} href={item.path} className={`nav-link whitespace-nowrap ${pathname === item.path ? "active text-accent" : ""}`}>
+              <Link
+                key={item.path}
+                href={item.path}
+                className={`nav-link whitespace-nowrap ${pathname === item.path ? "active text-accent" : ""}`}
+              >
                 {item.name}
               </Link>
             ))}
-            <Link
-              href="/projetos"
-              className="btn-modern flex items-center text-sm whitespace-nowrap"
-            >
-              Ver Projetos <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
           </nav>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 shrink-0 text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 rounded-lg -mr-1"
@@ -88,7 +79,6 @@ export default function Navigation() {
         </div>
       </div>
 
-      {/* Mobile Navigation - portal para body, overlay com z-index alto */}
       {mounted &&
         typeof document !== "undefined" &&
         createPortal(
@@ -102,7 +92,6 @@ export default function Navigation() {
                 transition={{ duration: 0.2 }}
                 className="md:hidden fixed inset-0 top-0 z-[9999] flex"
               >
-                {/* Painel do menu */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -128,22 +117,8 @@ export default function Navigation() {
                         </Link>
                       </motion.div>
                     ))}
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: navItems.length * 0.05 }}
-                    >
-                      <Link
-                        href="/projetos"
-                        className="mt-4 px-6 py-3 btn-modern-filled inline-flex items-center text-lg"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        Ver Projetos <ArrowRight className="ml-2 h-5 w-5" />
-                      </Link>
-                    </motion.div>
                   </div>
                 </motion.div>
-                {/* Backdrop clicável para fechar */}
                 <button
                   type="button"
                   aria-label="Fechar menu"

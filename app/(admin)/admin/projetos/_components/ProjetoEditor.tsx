@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { createSupabaseClient } from '@/lib/supabase/client'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -462,11 +461,9 @@ export function ProjetoEditor(props: ProjetoEditorProps) {
             <div className="flex flex-col gap-2">
               <div className="flex flex-wrap items-center gap-2">
                 <Label className="mb-0">Categorias</Label>
-                <Link href="/admin/projetos/categorias" target="_blank" rel="noopener noreferrer">
-                  <Button type="button" variant="outline" size="sm" className="gap-1.5">
-                    <Plus className="h-4 w-4" /> Nova categoria
-                  </Button>
-                </Link>
+                <span className="text-xs text-muted-foreground">
+                  (cadastradas no banco; selecione abaixo)
+                </span>
               </div>
               <div className="flex flex-wrap gap-2">
                 <Controller

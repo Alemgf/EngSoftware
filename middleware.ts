@@ -17,13 +17,13 @@ export function middleware(request: NextRequest) {
   }
 
   // Se o usuário estiver autenticado e tentar acessar a página de login,
-  // redirecionar para a página de orçamentos
+  // redirecionar para o painel
   if (pathname === "/admin/login") {
     const session = request.cookies.get("admin_session")
 
     if (session) {
-      const dashboardUrl = new URL("/admin/orcamentos", request.url)
-      return NextResponse.redirect(dashboardUrl)
+      const adminUrl = new URL("/admin/projetos", request.url)
+      return NextResponse.redirect(adminUrl)
     }
   }
 

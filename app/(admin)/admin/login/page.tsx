@@ -26,7 +26,7 @@ export default function AdminLoginPage() {
 
       if (hasSession) {
         setIsAuthenticated(true)
-        router.push("/admin/dashboard")
+        router.push("/admin/projetos")
       }
     }
 
@@ -53,7 +53,7 @@ export default function AdminLoginPage() {
       document.cookie = `admin_session=authenticated; path=/; expires=${expiryDate.toUTCString()}; SameSite=Lax`
 
       setTimeout(() => {
-        router.push("/admin/dashboard")
+        router.push("/admin/projetos")
       }, 500)
     } else {
       setError(result.message ?? "Login ou senha inválidos. Tente novamente.")

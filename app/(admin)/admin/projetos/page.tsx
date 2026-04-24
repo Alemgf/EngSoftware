@@ -177,11 +177,6 @@ export default function ProjetosAdminList() {
             <p className="text-muted-foreground">Crie, edite e gerencie seus projetos de portfólio</p>
           </div>
           <div className="flex gap-2">
-            <Link href="/admin/projetos/categorias">
-              <Button variant="outline" size="lg" className="gap-2">
-                Categorias
-              </Button>
-            </Link>
             <Link href="/admin/projetos/novo">
               <Button size="lg" className="gap-2 shadow-lg hover:shadow-xl transition-shadow">
                 <Plus className="h-5 w-5" /> Novo Projeto

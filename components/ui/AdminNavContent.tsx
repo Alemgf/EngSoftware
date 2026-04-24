@@ -2,14 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import {
-  LayoutDashboard,
-  LayoutList,
-  PlusCircle,
-  FileStack,
-  FolderKanban,
-  Users,
-} from 'lucide-react'
+import { PlusCircle, FileStack, FolderKanban, Users } from 'lucide-react'
 import {
   Accordion,
   AccordionItem,
@@ -28,40 +21,11 @@ export function AdminNavContent() {
 
   return (
     <>
-      <Link href="/admin/dashboard" className="mb-6 block text-xl font-bold">
+      <Link href="/admin/projetos" className="mb-6 block text-xl font-bold">
         LANDING.<span className="text-primary">Studio</span>
       </Link>
 
       <nav className="space-y-2 text-sm">
-        <Link
-          href="/admin/dashboard"
-          className={`${linkStyle} ${isActive('/admin/dashboard')}`}
-        >
-          <LayoutDashboard className="h-4 w-4" /> Dashboard
-        </Link>
-
-        <Accordion type="single" collapsible>
-          <AccordionItem value="orcamentos">
-            <AccordionTrigger className="px-3 py-2 rounded-lg">
-              <LayoutList className="h-4 w-4" /> Gerenciar Orçamentos
-            </AccordionTrigger>
-            <AccordionContent className="ml-6 mt-1 space-y-1">
-              <Link
-                href="/admin/orcamentos"
-                className={`${linkStyle} ${isActive('/admin/orcamentos')}`}
-              >
-                <FileStack className="h-4 w-4" /> Lista Orçamentos
-              </Link>
-              <Link
-                href="/admin/orcamentos/novo"
-                className={`${linkStyle} ${isActive('/admin/orcamentos/novo')}`}
-              >
-                <PlusCircle className="h-4 w-4" /> Novo Orçamento
-              </Link>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-
         <Accordion type="single" collapsible>
           <AccordionItem value="projetos">
             <AccordionTrigger className="px-3 py-2 rounded-lg">
